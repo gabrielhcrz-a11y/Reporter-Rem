@@ -1,0 +1,27 @@
+name: Compilar APK REM Industries
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Baixar código do repositório
+        uses: actions/checkout@v4
+
+      - name: Compilar APK com Buildozer
+        id: buildozer
+        uses: ArtemSBulgakov/buildozer-action@v1
+        with:
+          workdir: .
+          buildozer_version: stable
+
+      - name: Disponibilizar APK para download
+        uses: actions/upload-artifact@v4
+        with:
+          name: Reporte-REM-APK
+          path: bin/*.apk
